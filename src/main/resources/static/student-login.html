@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Login</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:lightblue;
+            font-family:Arial;
+        }
+
+        .box{
+            width:350px;
+            background:lightgoldenrodyellow;
+            padding:40px;
+            border-radius:15px;
+            text-align:center;
+            box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+        }
+
+        input{
+            width:90%;
+            padding:12px;
+            margin-top:15px;
+            border-radius:8px;
+            border:1px solid black;
+            font-size:16px;
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            margin-top:20px;
+            border:none;
+            border-radius:8px;
+            background:lightseagreen;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+        }
+
+        #message{
+            color:red;
+            margin-top:15px;
+            font-weight:bold;
+        }
+
+        .top-header{
+
+    position:absolute;
+
+    top:20px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:80%;
+
+    background:#1e3a8a;
+
+    padding:15px 25px;
+
+    border-radius:15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:0px 4px 15px rgba(0,0,0,0.2);
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.logo-area img{
+
+    width:65px;
+
+    height:65px;
+
+    background:white;
+
+    border-radius:50%;
+
+    padding:8px;
+}
+
+.logo-area h1{
+
+    margin:0;
+
+    color:white;
+
+    font-size:30px;
+}
+
+.logo-area p{
+
+    margin:3px 0 0 0;
+
+    color:#dbeafe;
+
+    font-size:15px;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="top-header">
+
+    <div class="logo-area">
+
+        <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+            alt="Logo"
+        >
+
+        <div>
+
+            <h1>Student Portal</h1>
+
+            <p>
+                Student Login Dashboard
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="box">
+
+    <h1>Student Login</h1>
+
+    <input
+        type="text"
+        id="regNo"
+        placeholder="Enter Register Number"
+    >
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter Password"
+    >
+
+    <button onclick="loginStudent()">
+        Login
+    </button>
+
+    <p id="message"></p>
+
+</div>
+
+<script>
+
+async function loginStudent(){
+
+    const regNo =
+        document.getElementById("regNo").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+    try{
+
+        const response = await fetch(
+            "http://localhost:8080/student-login",
+            {
+                method: "POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body: JSON.stringify({
+                    regNo: regNo,
+                    password: password
+                })
+            }
+        );
+
+        const student = await response.json();
+
+        console.log(student);
+
+        if(student.id != null){
+
+            window.location.href =
+            "student-dashboard.html?regNo=" + regNo;
+        }
+
+        else{
+
+            document.getElementById("message").innerHTML =
+            "Invalid Register Number or Password";
+        }
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+        document.getElementById("message").innerHTML =
+        "Server Error";
+    }
+}
+
+</script>
+
+</body>
+
+</html>
+

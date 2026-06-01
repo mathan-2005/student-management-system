@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Student Details</title>
+
+<style>
+
+body{
+
+    font-family:Arial;
+
+    background:lightblue;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+}
+
+.card{
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:15px;
+
+    width:400px;
+
+    text-align:center;
+
+    box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+}
+
+p{
+
+    font-size:22px;
+}
+
+span{
+
+    color:blue;
+
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Student Details</h1>
+
+<p>
+<b>Name:</b>
+<span id="name"></span>
+</p>
+
+<p>
+<b>Age:</b>
+<span id="age"></span>
+</p>
+
+<p>
+<b>Gender:</b>
+<span id="gender"></span>
+</p>
+
+<p>
+<b>Register No:</b>
+<span id="regno"></span>
+</p>
+
+</div>
+
+<script>
+
+const student =
+JSON.parse(localStorage.getItem("studentData"));
+
+console.log(student);
+
+document.getElementById("name").innerHTML =
+student.name;
+
+document.getElementById("age").innerHTML =
+student.age;
+
+document.getElementById("gender").innerHTML =
+student.gender;
+
+document.getElementById("regno").innerHTML =
+student.regNo;
+
+</script>
+
+</body>
+
+</html>

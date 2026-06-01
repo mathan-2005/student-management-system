@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Student Dashboard</title>
+
+<style>
+
+body{
+
+    font-family: Arial;
+
+    background: lightblue;
+
+    padding: 40px;
+}
+
+#studentData{
+
+    text-align: center;
+
+    font-size: 22px;
+
+    margin-top: 50px;
+}
+.top-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#1e3a8a;
+
+    padding:15px 25px;
+
+    border-radius:15px;
+
+    box-shadow:0px 4px 15px rgba(0,0,0,0.2);
+
+    margin-bottom:30px;
+}
+
+.logo-area{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+.logo-area img{
+
+    width:70px;
+
+    height:70px;
+
+    background:white;
+
+    border-radius:50%;
+
+    padding:8px;
+}
+
+.logo-area h1{
+
+    margin:0;
+
+    color:white;
+
+    font-size:32px;
+
+    text-align: center; }
+  
+
+.logo-area p{
+
+    margin-top:5px;
+
+    color:#dbeafe;
+
+    font-size:15px;
+}
+
+.logout-btn{
+
+    background:white;
+
+    color:#1e3a8a;
+
+    border:none;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.logout-btn:hover{
+
+    background:#dbeafe;
+
+    transform:scale(1.05);
+}
+
+h1{
+
+    text-align: center;
+}
+
+p{
+
+    font-size: 20px;
+}
+.download-btn{
+
+    background:black;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 24px;
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    font-weight:bold;
+    display:block;
+    margin:20px auto;
+    cursor:pointer;
+
+    text-align:center;
+
+    transition:0.3s;
+
+    box-shadow:black;
+}
+
+.download-btn:hover{
+
+    background:wheat;
+    transform:scale(1.05);
+   
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top-header">
+
+    <div class="logo-area">
+
+        <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+            alt="Logo"
+        >
+
+        <div>
+
+            <h1>Student Dashboard</h1>
+
+            <p>
+                View Student Details & Marksheet
+            </p>
+
+        </div>
+
+    </div>
+
+   
+
+    <button onclick="logout()" class="logout-btn">
+        Logout
+    </button>
+
+     
+
+</div>
+
+</div>
+
+<div id="studentData">
+
+</div>
+
+
+
+    <button onclick="downloadMarks()" class="download-btn">
+    Download Marks
+</button>
+
+<script>
+
+async function loadStudent() {
+
+
+const params = new URLSearchParams(window.location.search);
+
+const regNo = params.get("regNo");
+
+const response = await fetch(
+    `http://localhost:8080/student/${regNo}`
+);
+
+const student = await response.json();
+
+document.getElementById("studentData").innerHTML = `
+
+    <h2>Student Details</h2>
+
+    <p><b>Name:</b> ${student.name}</p>
+
+    <p><b>Register No:</b> ${student.regNo}</p>
+
+    <p><b>Age:</b> ${student.age}</p>
+
+    <p><b>Gender:</b> ${student.gender}</p>
+
+    <h2>Marksheet</h2>
+
+    <table border="1" cellpadding="10" cellspacing="0"
+style="margin:auto; background:white;">
+
+    <tr>
+        <th>Subject</th>
+        <th>Marks</th>
+    </tr>
+
+    <tr>
+        <td>Tamil</td>
+        <td>${student.tamil}</td>
+    </tr>
+
+    <tr>
+        <td>English</td>
+        <td>${student.english}</td>
+    </tr>
+
+    <tr>
+        <td>Maths</td>
+        <td>${student.maths}</td>
+    </tr>
+
+    <tr>
+        <td>Science</td>
+        <td>${student.science}</td>
+    </tr>
+
+    <tr>
+        <td>Social</td>
+        <td>${student.social}</td>
+    </tr>
+
+</table>
+ `;
+}
+
+
+loadStudent();
+function downloadMarks() {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const regNo = params.get("regNo");
+
+    window.location.href =
+        `http://localhost:8080/export/pdf/${regNo}`;
+}
+
+function logout() {
+
+
+window.location.href = "student-login.html";
+
+
+}
+
+
+</script>
+
+</body>
+
+</html>
